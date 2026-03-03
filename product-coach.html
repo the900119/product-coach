@@ -1,832 +1,899 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>找到你的第一個產品——互動引導</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    /* ── Reset & Tokens ────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>找到你的第一個產品</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+TC:wght@200;300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-    :root {
-      --bg:       #110e09;
-      --bg2:      #1a150e;
-      --bg3:      #221c13;
-      --border:   #2a2318;
-      --border2:  #3a3020;
-      --gold:     #c8a97a;
-      --gold2:    #e8c99a;
-      --text:     #f0e6d4;
-      --text2:    #c8b898;
-      --text3:    #8a7a6a;
-      --text4:    #5a4e3e;
-      --green:    #7a9e7a;
-      --amber:    #9e8a7a;
-      --serif:    'Noto Serif TC', Georgia, serif;
-      --sans:     'Noto Sans TC', system-ui, sans-serif;
-      --mono:     'DM Mono', 'Courier New', monospace;
-    }
+:root{
+  --w:     #ffffff;
+  --g0:    #fafafa;
+  --g1:    #f4f4f2;
+  --g2:    #e8e6e2;
+  --g3:    #d0cdc8;
+  --g4:    #a8a49e;
+  --g5:    #706c66;
+  --g6:    #3a3732;
+  --ink:   #1c1a18;
+  --gold:  #b8935a;
+  --gold2: #d4b07a;
+  --serif: 'Cormorant', Georgia, serif;
+  --sans:  'Noto Sans TC', system-ui, sans-serif;
+  --mono:  'DM Mono', monospace;
+}
 
-    /* Light mode override */
-    body.light {
-      --bg:     #faf7f2;
-      --bg2:    #f0ebe2;
-      --bg3:    #e8e0d4;
-      --border: #d4c9b8;
-      --border2:#c0b4a0;
-      --text:   #1a150e;
-      --text2:  #3a3020;
-      --text3:  #6a5a4a;
-      --text4:  #9a8a7a;
-      --gold:   #a07840;
-      --gold2:  #c09860;
-    }
+html { font-size: 16px; scroll-behavior: smooth; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 300;
-      min-height: 100vh;
-      line-height: 1.7;
-      transition: background 0.3s, color 0.3s;
-      display: flex;
-      justify-content: center;
-    }
-    body > .wrap { flex: 0 1 680px; }
+body {
+  background: var(--w);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
-    /* ── Layout ─────────────────────────────────────── */
-    .wrap {
-      max-width: 680px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 48px 48px 100px;
-    }
-    @media (max-width: 760px) {
-      .wrap { padding: 28px 20px 80px; }
-      .header-left h1 { font-size: 20px; }
-    }
+/* ── Shell ─────────────────────────────── */
+.shell {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+  min-height: 100vh;
+}
 
-    /* ── Header ─────────────────────────────────────── */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 36px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-    .header-left .label {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      color: var(--text4);
-      font-family: var(--mono);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .header-left h1 {
-      font-size: 24px;
-      font-family: var(--serif);
-      color: var(--text);
-      line-height: 1.3;
-    }
-    .header-left h1 em {
-      color: var(--gold);
-      font-style: italic;
-    }
-    .theme-btn {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text3);
-      padding: 6px 12px;
-      border-radius: 3px;
-      cursor: pointer;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      transition: all 0.2s;
-      flex-shrink: 0;
-      margin-top: 4px;
-    }
-    .theme-btn:hover { border-color: var(--gold); color: var(--gold); }
+/* ── Nav ──────────────────────────────── */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--g2);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--g4);
+}
+.nav-logo b { color: var(--gold); font-weight: 400; }
+.theme-sw {
+  width: 36px; height: 20px;
+  background: var(--g2);
+  border: none; border-radius: 10px;
+  cursor: pointer; position: relative;
+  transition: background .3s;
+  flex-shrink: 0;
+}
+.theme-sw::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--w);
+  transition: transform .3s, background .3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+body.dark .theme-sw { background: var(--gold); }
+body.dark .theme-sw::after { transform: translateX(16px); }
 
-    /* ── Progress ─────────────────────────────────── */
-    .progress-wrap { margin-bottom: 28px; }
-    .progress-meta {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-    .progress-meta span {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      font-family: var(--mono);
-      text-transform: uppercase;
-    }
-    .progress-meta .label { color: var(--text3); }
-    .progress-meta .count { color: var(--gold); }
-    .progress-track {
-      height: 3px;
-      background: var(--border);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--gold2));
-      border-radius: 2px;
-      transition: width 0.6s cubic-bezier(.4,0,.2,1);
-    }
-    .phase-dots {
-      display: flex;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .phase-dot {
-      flex: 1;
-      height: 2px;
-      border-radius: 2px;
-      background: var(--border);
-      transition: background 0.4s;
-    }
-    .phase-dot.active   { background: var(--gold); }
-    .phase-dot.done     { background: var(--gold2); }
+/* ── Dark mode ────────────────────────── */
+body.dark {
+  background: #111008;
+  color: #e8e0d4;
+  --w:    #111008;
+  --g0:   #161310;
+  --g1:   #1e1b16;
+  --g2:   #2a261f;
+  --g3:   #3e3930;
+  --g4:   #7a7268;
+  --g5:   #a09890;
+  --g6:   #c8c0b4;
+  --ink:  #ede5d8;
+  --gold: #c9a96e;
+  --gold2:#e0c898;
+}
 
-    /* ── Phase Tag ───────────────────────────────── */
-    .phase-tag {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 2px;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      font-family: var(--mono);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-      border: 1px solid;
-    }
-    .phase-tag.p1 { color: var(--green);  border-color: var(--green); }
-    .phase-tag.p2 { color: var(--amber);  border-color: var(--amber); }
-    .phase-tag.p3 { color: var(--gold);   border-color: var(--gold);  }
+/* ── Hero ─────────────────────────────── */
+.hero {
+  padding: 72px 0 60px;
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(52px, 10vw, 80px);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-desc {
+  font-size: 13px;
+  color: var(--g4);
+  letter-spacing: .06em;
+  line-height: 1.8;
+}
+.hero-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold2);
+  margin: 28px 0;
+}
 
-    /* ── Question ────────────────────────────────── */
-    .question-block { animation: fadeUp 0.45s ease forwards; }
+/* ── Progress ─────────────────────────── */
+.progress {
+  margin-bottom: 56px;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.progress-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--g3);
+}
+.progress-frac {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+}
+.progress-bar {
+  height: 1px;
+  background: var(--g2);
+  position: relative;
+  overflow: visible;
+}
+.progress-done {
+  position: absolute;
+  left: 0; top: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width .8s cubic-bezier(.4,0,.2,1);
+}
+.progress-dot {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold2);
+  transition: left .8s cubic-bezier(.4,0,.2,1);
+}
+.phases {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+}
+.phase-chip {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--g3);
+  padding: 3px 10px;
+  border: 1px solid var(--g2);
+  border-radius: 20px;
+  transition: all .35s;
+}
+.phase-chip.on  { color: var(--gold); border-color: var(--gold2); background: color-mix(in srgb, var(--gold) 6%, transparent); }
+.phase-chip.was { color: var(--g4); border-color: var(--g2); background: var(--g1); }
 
-    .question-text {
-      font-size: 17px;
-      color: var(--text);
-      line-height: 1.85;
-      margin-bottom: 18px;
-      white-space: pre-wrap;
-      font-weight: 300;
-    }
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1em;
-      background: var(--gold);
-      margin-left: 2px;
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
-    }
+/* ── History ──────────────────────────── */
+.history { margin-bottom: 48px; }
+.h-row {
+  display: flex;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--g1);
+  animation: up .3s ease;
+}
+.h-n {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--g3);
+  letter-spacing: .1em;
+  padding-top: 3px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: right;
+}
+.h-a {
+  font-size: 13px;
+  color: var(--g5);
+  line-height: 1.75;
+  flex: 1;
+}
 
-    .hint-box {
-      padding: 10px 14px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      font-size: 12px;
-      color: var(--text3);
-      font-family: var(--mono);
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
+/* ── Question block ───────────────────── */
+.q-block { animation: up .5s ease; }
 
-    /* ── Choices ──────────────────────────────── */
-    .choices { display: grid; gap: 8px; margin-bottom: 18px; }
-    .choice-btn {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 16px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--text3);
-      font-size: 13px;
-      font-family: var(--sans);
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s;
-      width: 100%;
-    }
-    .choice-btn:hover { border-color: var(--gold); color: var(--gold2); }
-    .choice-btn.selected { border-color: var(--gold); color: var(--gold); background: rgba(200,169,122,0.08); }
-    .choice-key {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text4);
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
-    .choice-btn.selected .choice-key { color: var(--gold); }
+.q-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--g2);
+}
+.q-phase-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.q-phase-tag::before {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.q-ordinal {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--g3);
+  letter-spacing: .05em;
+}
 
-    /* ── Textarea ──────────────────────────────── */
-    textarea {
-      width: 100%;
-      padding: 14px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--text);
-      font-size: 14px;
-      font-family: var(--sans);
-      font-weight: 300;
-      line-height: 1.7;
-      resize: vertical;
-      min-height: 130px;
-      margin-bottom: 14px;
-      transition: border-color 0.2s;
-      outline: none;
-    }
-    textarea:focus { border-color: var(--gold); }
-    textarea::placeholder { color: var(--text4); }
+.q-text {
+  font-family: var(--serif);
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink);
+  margin-bottom: 36px;
+  letter-spacing: -.005em;
+  white-space: pre-wrap;
+}
+.q-cursor {
+  display: inline-block;
+  width: 2px; height: .9em;
+  background: var(--gold);
+  vertical-align: middle;
+  margin-left: 3px;
+  animation: blink 1s step-end infinite;
+}
 
-    /* ── Buttons ───────────────────────────────── */
-    .btn-row { display: flex; align-items: center; gap: 14px; }
-    .btn-primary {
-      padding: 11px 24px;
-      background: var(--gold);
-      border: none;
-      border-radius: 2px;
-      color: var(--bg);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      font-family: var(--mono);
-      text-transform: uppercase;
-      cursor: pointer;
-      font-weight: 500;
-      transition: opacity 0.2s, background 0.2s;
-    }
-    .btn-primary:disabled { opacity: 0.35; cursor: default; }
-    .btn-primary:not(:disabled):hover { background: var(--gold2); }
-    .btn-hint {
-      font-size: 10px;
-      color: var(--text4);
-      font-family: var(--mono);
-    }
+.q-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--g4);
+  letter-spacing: .06em;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  padding-left: 14px;
+  border-left: 1px solid var(--gold2);
+}
 
-    /* ── Affirmation ───────────────────────────── */
-    .affirmation {
-      margin-top: 18px;
-      font-size: 14px;
-      color: var(--gold);
-      font-family: var(--serif);
-      font-style: italic;
-      animation: fadeUp 0.4s ease;
-    }
+/* ── Choices ──────────────────────────── */
+.choices { display: grid; gap: 2px; margin-bottom: 36px; }
+.choice-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--g1);
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+}
+.choice-item:first-child { border-top: 1px solid var(--g1); }
+.choice-item::after {
+  content: '';
+  position: absolute;
+  left: -32px; right: -32px; top: 0; bottom: 0;
+  background: color-mix(in srgb, var(--gold) 4%, transparent);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.choice-item:hover::after { opacity: 1; }
+.choice-item.sel::after   { opacity: 1; }
+.choice-key {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--g3);
+  width: 18px;
+  flex-shrink: 0;
+  transition: color .2s;
+  position: relative; z-index: 1;
+}
+.choice-item.sel .choice-key { color: var(--gold); }
+.choice-txt {
+  font-size: 14px;
+  color: var(--g6);
+  line-height: 1.6;
+  transition: color .2s;
+  position: relative; z-index: 1;
+}
+.choice-item.sel .choice-txt { color: var(--ink); }
+.choice-check {
+  margin-left: auto;
+  width: 16px; height: 16px;
+  border: 1px solid var(--g2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.choice-item.sel .choice-check {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.choice-item.sel .choice-check::after {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: white;
+}
 
-    /* ── History ───────────────────────────────── */
-    .history { margin-bottom: 28px; }
-    .history-item {
-      margin-bottom: 14px;
-      animation: slideIn 0.35s ease;
-    }
-    .history-num {
-      font-size: 10px;
-      color: var(--text4);
-      font-family: var(--mono);
-      margin-bottom: 4px;
-    }
-    .history-ans {
-      font-size: 13px;
-      color: var(--text3);
-      line-height: 1.65;
-      padding-left: 12px;
-      border-left: 1px solid var(--border);
-    }
+/* ── Textarea ─────────────────────────── */
+.field {
+  margin-bottom: 36px;
+  position: relative;
+}
+.field-line {
+  width: 100%;
+  height: 1px;
+  background: var(--g2);
+  transition: background .3s;
+}
+.field.focused .field-line { background: var(--gold); }
+textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--g2);
+  outline: none;
+  padding: 18px 0 12px;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1.85;
+  resize: none;
+  min-height: 120px;
+  letter-spacing: .01em;
+  display: block;
+  transition: border-color .3s;
+}
+textarea:focus { border-top-color: var(--gold); }
+textarea::placeholder { color: var(--g3); }
+.char-count {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--g3);
+  letter-spacing: .1em;
+  margin-top: 6px;
+  transition: color .2s;
+}
+.char-count.has { color: var(--g4); }
 
-    /* ── Summary Card ──────────────────────────── */
-    .summary { animation: fadeUp 0.6s ease forwards; }
-    .summary-header {
-      margin-bottom: 24px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .summary-label {
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: var(--gold);
-      font-family: var(--mono);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .summary-title {
-      font-size: 22px;
-      font-family: var(--serif);
-      color: var(--text);
-    }
+/* ── Submit ───────────────────────────── */
+.submit-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.btn-next {
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  padding: 13px 36px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-next::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: translateY(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.btn-next:hover::before  { transform: translateY(0); }
+.btn-next:hover          { color: var(--w); }
+.btn-next[disabled]      { opacity: .25; cursor: default; pointer-events: none; }
+.btn-next span           { position: relative; z-index: 1; }
+.kb-hint {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--g3);
+  letter-spacing: .1em;
+}
 
-    .summary-grid { display: grid; gap: 12px; margin-bottom: 24px; }
-    .summary-field {
-      padding: 14px 16px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-    }
-    .field-label {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      color: var(--text3);
-      font-family: var(--mono);
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .field-value {
-      font-size: 14px;
-      color: var(--text2);
-      line-height: 1.65;
-    }
+/* ── Affirmation ──────────────────────── */
+.aff-line {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--g1);
+  animation: up .4s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.aff-mark {
+  font-family: var(--serif);
+  font-size: 40px;
+  color: var(--gold2);
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: .6;
+}
+.aff-txt {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1.6;
+  padding-top: 6px;
+}
 
-    .action-box {
-      padding: 18px 20px;
-      background: var(--bg2);
-      border: 1px solid rgba(200,169,122,0.3);
-      border-radius: 4px;
-      margin-bottom: 20px;
-    }
-    .action-label {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-      font-family: var(--mono);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .action-text {
-      font-size: 14px;
-      color: var(--text2);
-      line-height: 1.75;
-    }
-    .action-text em { color: var(--text); font-style: italic; }
+/* ── Summary ──────────────────────────── */
+.summary { animation: up .6s ease; }
 
-    .btn-secondary {
-      width: 100%;
-      padding: 12px;
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      border-radius: 3px;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      font-family: var(--mono);
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-bottom: 10px;
-    }
-    .btn-secondary:hover { background: rgba(200,169,122,0.1); }
+.sum-top {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--g2);
+  margin-bottom: 56px;
+}
+.sum-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.sum-title {
+  font-family: var(--serif);
+  font-size: clamp(42px, 8vw, 64px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+.sum-title em { font-style: italic; color: var(--gold); }
 
-    .btn-restart {
-      width: 100%;
-      padding: 10px;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text3);
-      border-radius: 3px;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      font-family: var(--mono);
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-restart:hover { border-color: var(--text3); color: var(--text2); }
+.sum-items { margin-bottom: 56px; }
+.sum-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 0 32px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--g1);
+  align-items: baseline;
+}
+.sum-row:first-child { border-top: 1px solid var(--g1); }
+.sum-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--g4);
+  padding-top: 3px;
+}
+.sum-val {
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.75;
+  font-weight: 300;
+}
 
-    /* ── Animations ──────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-6px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
+.cta-block {
+  padding: 36px 0;
+  border-top: 1px solid var(--g2);
+  border-bottom: 1px solid var(--g2);
+  margin-bottom: 48px;
+}
+.cta-step {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.cta-body {
+  font-size: 14px;
+  color: var(--g5);
+  line-height: 1.9;
+}
+.cta-quote {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.7;
+  margin-top: 14px;
+  padding-left: 16px;
+  border-left: 2px solid var(--gold2);
+}
 
-    /* ── Print / PDF ─────────────────────────── */
-    @media print {
-      body { background: #fff !important; color: #111 !important; }
-      .theme-btn, .btn-secondary, .btn-restart, .btn-primary,
-      .progress-wrap, .header, textarea, .choices,
-      .btn-row, .affirmation, .hint-box { display: none !important; }
-      .wrap { padding: 0; max-width: 100%; }
-      .summary-field, .action-box { border: 1px solid #ccc !important; background: #fafafa !important; }
-      .field-value, .action-text, .summary-title { color: #111 !important; }
-      .field-label, .action-label, .summary-label { color: #555 !important; }
-      .summary { display: block !important; }
-    }
-  </style>
+.sum-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-pdf {
+  padding: 15px;
+  background: var(--ink);
+  color: var(--w);
+  border: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s;
+  text-align: center;
+}
+body.dark .btn-pdf { background: var(--g6); color: var(--ink); }
+.btn-pdf:hover { background: var(--gold); color: var(--w); }
+.btn-restart {
+  padding: 13px;
+  background: transparent;
+  border: 1px solid var(--g2);
+  color: var(--g4);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+}
+.btn-restart:hover { border-color: var(--g4); color: var(--g6); }
+
+/* ── Footer ───────────────────────────── */
+footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--g1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 48px;
+}
+footer span {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--g3);
+}
+
+/* ── Animations ───────────────────────── */
+@keyframes up   { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes blink{ 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── Responsive ───────────────────────── */
+@media(max-width:600px){
+  .shell{padding:0 20px 80px}
+  .sum-row{grid-template-columns:1fr;gap:6px}
+  .sum-lbl{padding-bottom:2px}
+  .choice-item::after{left:-20px;right:-20px}
+}
+
+/* ── Print ────────────────────────────── */
+@media print{
+  nav,.progress,.history,.q-block,.sum-actions,footer{display:none!important}
+  body{background:#fff!important;color:#111!important}
+  .sum-top{padding:32px 0}
+  .sum-row{border-color:#ddd!important}
+  .sum-val{color:#222!important}
+  .sum-lbl{color:#888!important}
+  .cta-block{border-color:#ddd!important}
+  .cta-body,.cta-quote{color:#333!important}
+}
+</style>
 </head>
 <body>
-<div class="wrap">
+<div class="shell">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
-      <div class="label">知識創業教練</div>
-      <h1>找到你的<br><em>第一個產品</em></h1>
-    </div>
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀ 淺色</button>
+  <nav>
+    <div class="nav-logo">知識創業教練 <b>/</b> 產品發現</div>
+    <button class="theme-sw" id="sw" onclick="toggleDark()" title="切換深色模式"></button>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero" id="hero">
+    <div class="hero-eyebrow">互動引導工作坊</div>
+    <div class="hero-title">找到你的<br><em>第一個產品</em></div>
+    <div class="hero-line"></div>
+    <div class="hero-desc">十個問題&ensp;·&ensp;三個階段&ensp;·&ensp;一份可以立刻執行的草稿</div>
   </div>
 
   <!-- Progress -->
-  <div class="progress-wrap" id="progressWrap">
+  <div class="progress" id="prog">
     <div class="progress-meta">
-      <span class="label">進度</span>
-      <span class="count" id="progressCount">1 / 10</span>
+      <span class="progress-label">進度</span>
+      <span class="progress-frac" id="pfrac">1 / 10</span>
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill" style="width:10%"></div>
+    <div class="progress-bar">
+      <div class="progress-done" id="pdone" style="width:10%"></div>
+      <div class="progress-dot"  id="pdot"  style="left:10%"></div>
     </div>
-    <div class="phase-dots" id="phaseDots">
-      <!-- filled by JS -->
-    </div>
+    <div class="phases" id="phases"></div>
   </div>
 
-  <!-- Main area -->
+  <!-- Main -->
   <div id="app"></div>
 
-</div>
+  <footer>
+    <span>定位不是想出來的，是賣出來的</span>
+    <span id="fq"></span>
+  </footer>
 
+</div>
 <script>
-/* ═══════════════════════════════════════════════════
-   DATA
-═══════════════════════════════════════════════════ */
-const QUESTIONS = [
-  {
-    id: 1, phase: "挖掘素材", phaseClass: "p1",
-    text: "先不要想賣什麼。告訴我——過去這一年，你花最多時間鑽研的事情是什麼？不管是工作上、生活上、還是單純的興趣都算。",
-    affirmations: ["很有意思。這個方向值得繼續挖。", "好，繼續。"],
-  },
-  {
-    id: 2, phase: "挖掘素材", phaseClass: "p1",
-    text: "在這件事上，你有沒有走過一段彎路，後來才找到更快、更有效的方法？如果有，那個轉折點是什麼？",
-    affirmations: ["那段彎路，就是你最值錢的資產。", "轉折點往往就是產品的核心。"],
-  },
-  {
-    id: 3, phase: "挖掘素材", phaseClass: "p1",
-    text: "你身邊有沒有人因為你分享這件事而受益過？不管是一句話的建議，還是你幫他解決了某個問題。是什麼情況？",
-    affirmations: ["你已經在免費提供諮詢了。", "這就是你市場存在的最好證明。"],
-  },
-  {
-    id: 4, phase: "挖掘素材", phaseClass: "p1",
-    text: "你有沒有買過跟這個主題相關的課程、電子書、或任何付費內容？你買的時候在解決什麼問題？",
-    affirmations: ["你買的時候，就是你的目標客戶。", "消費過，代表你理解這個市場的痛點。"],
-  },
-  {
-    id: 5, phase: "收斂方向", phaseClass: "p2",
-    text: "根據你說的，我看到幾個可能的方向。\n\n方向 A：幫助【某類人】在【某情境】做到【某件事】\n方向 B：幫助【某類人】解決【某個痛點】\n方向 C：幫助【某類人】從【某狀態】達到【某目標】\n\n哪個方向讓你感覺「這個我真的可以幫到人」？",
-    affirmations: ["選擇直覺反應最強的那個。", "你的直覺比你想的更準。"],
-  },
-  {
-    id: 6, phase: "收斂方向", phaseClass: "p2",
-    text: "你知道現在市場上有沒有人在賣類似的東西嗎？你看過哪些競品？",
-    hint: "↗ 如果不確定，現在就去 Google / YouTube 搜尋【你的主題 + 課程/教學】，告訴我你找到什麼。",
-    affirmations: ["有競品是好事，代表市場已被驗證。", "競品是你最好的市場研究報告。"],
-  },
-  {
-    id: 7, phase: "收斂方向", phaseClass: "p2",
-    text: "如果你明天就要把這個產品賣給一個人，你能不能在一次一小時的通話裡，幫他解決這個問題？",
-    affirmations: ["能，就夠了。這是你的起點，不是終點。", "一小時的諮詢，就是你最小可行產品。"],
-  },
-  {
-    id: 8, phase: "定義產品", phaseClass: "p3",
-    text: "你覺得這個產品最適合用哪種形式交付？\n\n先不要想哪個最容易做，想哪個對客戶最有價值。",
-    isChoice: true,
-    choices: [
-      { key: "A", desc: "PDF 或電子書（步驟清單 / 框架）" },
-      { key: "B", desc: "短課程（3–5 個影片模組）" },
-      { key: "C", desc: "模板（讓客戶直接套用）" },
-      { key: "D", desc: "四次一對一諮詢通話" },
-    ],
-    affirmations: ["形式決定了客戶的體驗與你的定價空間。", "記住，形式可以之後迭代，先把核心內容做出來。"],
-  },
-  {
-    id: 9, phase: "定義產品", phaseClass: "p3",
-    text: "如果你要用一句話描述這個產品能幫客戶達成的結果，你會怎麼說？\n\n格式：幫助【誰】在【時間範圍】內做到【具體結果】。",
-    affirmations: ["這句話就是你的核心價值主張。", "把這句話存起來——它會出現在你的銷售頁上。"],
-  },
-  {
-    id: 10, phase: "定義產品", phaseClass: "p3",
-    text: "最後一個問題：你現在腦中有沒有 1–3 個人，是你認識的、馬上就可以聯絡、而且這個產品對他們有價值的？他們是誰？",
-    affirmations: ["這些人，就是你的第一批客戶。", "不需要找陌生人，先從認識你的人開始。"],
-    isLast: true,
-  },
+/* ═══ DATA ═══════════════════════════════════════ */
+const QS=[
+  {id:1,ph:"挖掘素材",p:1,
+   t:"先不要想賣什麼。\n\n告訴我——過去這一年，你花最多時間鑽研的事情是什麼？不管是工作上、生活上、還是單純的興趣都算。",
+   af:["很有意思。這個方向值得繼續挖。","好，繼續。這是你最真實的材料。"]},
+  {id:2,ph:"挖掘素材",p:1,
+   t:"在這件事上，你有沒有走過一段彎路，後來才找到更快、更有效的方法？\n\n如果有，那個轉折點是什麼？",
+   af:["那段彎路，就是你最值錢的資產。","轉折點往往就是產品的核心。"]},
+  {id:3,ph:"挖掘素材",p:1,
+   t:"你身邊有沒有人因為你分享這件事而受益過？\n\n不管是一句話的建議，還是你幫他解決了某個問題。是什麼情況？",
+   af:["你已經在免費提供諮詢了。","這就是你市場存在的最好證明。"]},
+  {id:4,ph:"挖掘素材",p:1,
+   t:"你有沒有買過跟這個主題相關的課程、電子書、或任何付費內容？\n\n你買的時候在解決什麼問題？",
+   af:["你買的時候，就是你的目標客戶。","消費過，代表你真正理解這個市場的痛。"]},
+  {id:5,ph:"收斂方向",p:2,
+   t:"根據你說的，我看到幾個可能的方向。\n\n方向 A：幫助【某類人】在【某情境】做到【某件事】\n方向 B：幫助【某類人】解決【某個核心痛點】\n方向 C：幫助【某類人】從【某狀態】加速到【某目標】\n\n哪個方向讓你感覺「這個我真的可以幫到人」？",
+   af:["選擇直覺反應最強的那個。","你的直覺比分析更準。"]},
+  {id:6,ph:"收斂方向",p:2,
+   t:"你知道現在市場上有沒有人在賣類似的東西嗎？\n\n你看過哪些競品？",
+   hint:"如果不確定，現在去 Google 或 YouTube 搜尋「你的主題 + 課程」，告訴我你找到什麼。",
+   af:["有競品是好事，代表市場已被驗證。","競品是你最省錢的市場研究報告。"]},
+  {id:7,ph:"收斂方向",p:2,
+   t:"如果你明天就要把這個產品賣給一個人——\n\n你能不能在一次一小時的通話裡，幫他解決這個問題？",
+   af:["能，就夠了。這是你的起點，不是終點。","一小時的諮詢，就是你的最小可行產品。"]},
+  {id:8,ph:"定義產品",p:3,
+   t:"你覺得這個產品最適合用哪種形式交付？\n\n先不要想哪個最容易做，想哪個對客戶最有價值。",
+   isC:true,
+   cs:[
+     {k:"A",d:"PDF 或電子書（步驟清單 / 框架）"},
+     {k:"B",d:"短課程（3–5 個影片模組）"},
+     {k:"C",d:"模板（讓客戶直接套用）"},
+     {k:"D",d:"四次一對一諮詢通話"},
+   ],
+   af:["形式決定了客戶的體驗與你的定價空間。","形式可以迭代，先把核心內容做出來。"]},
+  {id:9,ph:"定義產品",p:3,
+   t:"用一句話描述這個產品能幫客戶達成的結果——\n\n格式：幫助【誰】在【時間範圍】內做到【具體結果】。",
+   af:["這句話就是你的核心價值主張。","把它存起來，它會出現在你的銷售頁上。"]},
+  {id:10,ph:"定義產品",p:3,
+   t:"最後一個問題：你現在腦中有沒有 1–3 個人——\n\n是你認識的、馬上就可以聯絡、而且這個產品對他們有價值的？他們是誰？",
+   af:["這些人，就是你的第一批客戶。","不需要找陌生人，先從認識你的人開始。"],
+   last:true},
 ];
 
-/* ═══════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════ */
-let state = {
-  step: 0,
-  answers: [],
-  typingDone: false,
-  showAff: false,
-  affText: "",
-  selectedChoice: null,
-  done: false,
-};
+/* ═══ STATE ══════════════════════════════════════ */
+let S={step:0,ans:[],typed:false,busy:false,sel:null,done:false};
 
-/* ═══════════════════════════════════════════════════
-   THEME
-═══════════════════════════════════════════════════ */
-function toggleTheme() {
-  document.body.classList.toggle("light");
-  const btn = document.getElementById("themeBtn");
-  btn.textContent = document.body.classList.contains("light") ? "🌙 深色" : "☀ 淺色";
-}
+/* ═══ DARK ═══════════════════════════════════════ */
+function toggleDark(){document.body.classList.toggle('dark');}
 
-/* ═══════════════════════════════════════════════════
-   PROGRESS
-═══════════════════════════════════════════════════ */
-function updateProgress() {
-  if (state.done) {
-    document.getElementById("progressWrap").style.display = "none";
+/* ═══ PROGRESS ═══════════════════════════════════ */
+function refreshProg(){
+  if(S.done){
+    document.getElementById('prog').style.display='none';
+    document.getElementById('hero').style.display='none';
+    document.getElementById('fq').textContent='';
     return;
   }
-  const total = QUESTIONS.length;
-  const cur   = state.step + 1;
-  const pct   = Math.round((cur / total) * 100);
-
-  document.getElementById("progressCount").textContent = cur + " / " + total;
-  document.getElementById("progressFill").style.width  = pct + "%";
-
-  // Phase dots (3 phases: 1-4, 5-7, 8-10)
-  const phases = [
-    { label: "挖掘素材", range: [1,4] },
-    { label: "收斂方向", range: [5,7] },
-    { label: "定義產品", range: [8,10] },
-  ];
-  const dotsEl = document.getElementById("phaseDots");
-  dotsEl.innerHTML = phases.map((p, i) => {
-    const start = p.range[0], end = p.range[1];
-    let cls = "";
-    if (cur > end)               cls = "done";
-    else if (cur >= start)       cls = "active";
-    return `<div class="phase-dot ${cls}" title="${p.label}"></div>`;
-  }).join("");
+  const n=S.step+1,tot=QS.length,pct=Math.round(n/tot*100);
+  document.getElementById('pfrac').textContent=n+' / '+tot;
+  document.getElementById('pdone').style.width=pct+'%';
+  document.getElementById('pdot').style.left=pct+'%';
+  document.getElementById('fq').textContent='問題 '+n;
+  const PH=[{l:'挖掘素材',r:[1,4]},{l:'收斂方向',r:[5,7]},{l:'定義產品',r:[8,10]}];
+  document.getElementById('phases').innerHTML=PH.map(p=>{
+    let c='';
+    if(n>p.r[1])c='was';
+    else if(n>=p.r[0])c='on';
+    return`<span class="phase-chip ${c}">${p.l}</span>`;
+  }).join('');
 }
 
-/* ═══════════════════════════════════════════════════
-   TYPING EFFECT
-═══════════════════════════════════════════════════ */
-let typingTimer = null;
-function typeText(text, el, onDone, speed = 20) {
-  clearInterval(typingTimer);
-  let i = 0;
-  el.textContent = "";
-  typingTimer = setInterval(() => {
-    if (i < text.length) {
-      el.textContent = text.slice(0, i + 1);
-      i++;
-    } else {
-      clearInterval(typingTimer);
-      // Remove cursor blink from question, mark done
-      state.typingDone = true;
-      renderInputArea();
-      if (onDone) onDone();
+/* ═══ TYPING ══════════════════════════════════════ */
+let TT=null;
+function type(text,el,cb,spd=16){
+  clearInterval(TT);let i=0;el.textContent='';
+  TT=setInterval(()=>{
+    if(i<text.length){el.textContent=text.slice(0,i+1);i++;}
+    else{
+      clearInterval(TT);
+      el.innerHTML=x(text);
+      S.typed=true;renderInput();if(cb)cb();
     }
-  }, speed);
+  },spd);
 }
 
-/* ═══════════════════════════════════════════════════
-   RENDER
-═══════════════════════════════════════════════════ */
-function render() {
-  updateProgress();
-  const app = document.getElementById("app");
+/* ═══ RENDER ══════════════════════════════════════ */
+function render(){
+  refreshProg();
+  const app=document.getElementById('app');
+  if(S.done){app.innerHTML=buildSum();return;}
+  const q=QS[S.step];
 
-  if (state.done) {
-    app.innerHTML = buildSummary();
-    return;
-  }
-
-  const q = QUESTIONS[state.step];
-
-  let historyHTML = "";
-  state.answers.forEach((ans, i) => {
-    historyHTML += `
-      <div class="history-item">
-        <div class="history-num">Q${i + 1} · ${QUESTIONS[i].phase}</div>
-        <div class="history-ans">${escHtml(ans)}</div>
-      </div>`;
+  let hist='';
+  S.ans.forEach((a,i)=>{
+    hist+=`<div class="h-row"><div class="h-n">Q${i+1}</div><div class="h-a">${x(a)}</div></div>`;
   });
 
-  app.innerHTML = `
-    <div class="history" id="history">${historyHTML}</div>
-    <div class="question-block" id="qBlock">
-      <span class="phase-tag ${q.phaseClass}">${q.phase}</span>
-      <div class="question-text" id="qText"></div>
-      ${q.hint ? `<div class="hint-box" id="qHint" style="display:none">${escHtml(q.hint)}</div>` : ""}
-      <div id="inputArea" style="display:none"></div>
-      <div class="affirmation" id="affirmation" style="display:none"></div>
-    </div>
-  `;
-
-  // Start typing
-  const qTextEl = document.getElementById("qText");
-  typeText(q.text, qTextEl, () => {
-    if (q.hint) document.getElementById("qHint").style.display = "block";
-    renderInputArea();
-    scrollBottom();
-  });
-}
-
-function renderInputArea() {
-  if (!state.typingDone) return;
-  const q = QUESTIONS[state.step];
-  const ia = document.getElementById("inputArea");
-  if (!ia) return;
-  ia.style.display = "block";
-
-  if (q.isChoice) {
-    ia.innerHTML = `
-      <div class="choices">
-        ${q.choices.map(c => `
-          <button class="choice-btn${state.selectedChoice === c.key ? " selected" : ""}"
-                  onclick="selectChoice('${c.key}')">
-            <span class="choice-key">${c.key}</span>
-            <span>${escHtml(c.desc)}</span>
-          </button>`).join("")}
+  const ordinals=['一','二','三','四','五','六','七','八','九','十'];
+  app.innerHTML=`
+    <div class="history">${hist}</div>
+    <div class="q-block" id="qb">
+      <div class="q-header">
+        <div class="q-phase-tag">${q.ph}</div>
+        <div class="q-ordinal">第${ordinals[q.id-1]}題</div>
       </div>
-      <div class="btn-row">
-        <button class="btn-primary" id="submitBtn"
-          onclick="submitAnswer()"
-          ${!state.selectedChoice ? "disabled" : ""}>
-          ${q.isLast ? "完成" : "繼續 →"}
-        </button>
-      </div>`;
-  } else {
-    ia.innerHTML = `
-      <textarea id="ansInput" placeholder="輸入你的回答..."
-        onkeydown="handleKey(event)"></textarea>
-      <div class="btn-row">
-        <button class="btn-primary" id="submitBtn" onclick="submitAnswer()">
-          ${q.isLast ? "完成" : "繼續 →"}
-        </button>
-        <span class="btn-hint">⌘↵ 快速送出</span>
-      </div>`;
-    const ta = document.getElementById("ansInput");
-    if (ta) ta.focus();
-  }
-}
-
-/* ═══════════════════════════════════════════════════
-   INTERACTIONS
-═══════════════════════════════════════════════════ */
-function selectChoice(key) {
-  state.selectedChoice = key;
-  renderInputArea();
-}
-
-function handleKey(e) {
-  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-    e.preventDefault();
-    submitAnswer();
-  }
-}
-
-function submitAnswer() {
-  if (state.showAff) return;
-  const q = QUESTIONS[state.step];
-
-  let val = "";
-  if (q.isChoice) {
-    if (!state.selectedChoice) return;
-    const chosen = q.choices.find(c => c.key === state.selectedChoice);
-    val = chosen.key + "）" + chosen.desc;
-  } else {
-    const ta = document.getElementById("ansInput");
-    val = ta ? ta.value.trim() : "";
-    if (!val) return;
-  }
-
-  // Show affirmation
-  state.showAff = true;
-  const aff = q.affirmations[Math.floor(Math.random() * q.affirmations.length)];
-  const affEl = document.getElementById("affirmation");
-  if (affEl) { affEl.textContent = "✦ " + aff; affEl.style.display = "block"; }
-
-  const btn = document.getElementById("submitBtn");
-  if (btn) btn.disabled = true;
-
-  state.answers.push(val);
-
-  setTimeout(() => {
-    state.showAff      = false;
-    state.typingDone   = false;
-    state.selectedChoice = null;
-
-    if (state.step + 1 >= QUESTIONS.length) {
-      state.done = true;
-    } else {
-      state.step++;
-    }
-    render();
-    scrollBottom();
-  }, 1500);
-}
-
-/* ═══════════════════════════════════════════════════
-   SUMMARY
-═══════════════════════════════════════════════════ */
-function buildSummary() {
-  const q9  = state.answers[8] || "（未填入）";
-  const q8  = state.answers[7] || "（未填入）";
-  const q10 = state.answers[9] || "（未填入）";
-  const q1  = state.answers[0] || "（未填入）";
-
-  return `
-    <div class="summary" id="summary">
-      <div class="summary-header">
-        <div class="summary-label">✦ 你的第一個產品草稿</div>
-        <div class="summary-title">準備好了。<br>現在開始賣。</div>
+      <div class="q-text" id="qt"></div>
+      ${q.hint?`<div class="q-hint" id="qhint" style="display:none">↗&ensp;${x(q.hint)}</div>`:''}
+      <div id="iz" style="display:none"></div>
+      <div class="aff-line" id="afl" style="display:none">
+        <div class="aff-mark">"</div>
+        <div class="aff-txt" id="aft"></div>
       </div>
-
-      <div class="summary-grid">
-        <div class="summary-field">
-          <div class="field-label">核心主題</div>
-          <div class="field-value">${escHtml(q1)}</div>
-        </div>
-        <div class="summary-field">
-          <div class="field-label">承諾的結果</div>
-          <div class="field-value">${escHtml(q9)}</div>
-        </div>
-        <div class="summary-field">
-          <div class="field-label">產品形式</div>
-          <div class="field-value">${escHtml(q8)}</div>
-        </div>
-        <div class="summary-field">
-          <div class="field-label">第一批潛在客戶</div>
-          <div class="field-value">${escHtml(q10)}</div>
-        </div>
-        <div class="summary-field">
-          <div class="field-label">定價建議</div>
-          <div class="field-value">低價測試版：NT$1,500–3,000 ／ 一對一諮詢：NT$5,000–12,000</div>
-        </div>
-      </div>
-
-      <div class="action-box">
-        <div class="action-label">▶ 你的第一步（現在就做）</div>
-        <div class="action-text">
-          傳訊息給你剛才提到的那個人，問他：<br>
-          <em>「我最近在整理一個方法，你有沒有在面對這個問題？我想聊聊看能不能幫到你。」</em>
-        </div>
-      </div>
-
-      <button class="btn-secondary" onclick="exportPDF()">
-        ↓ 匯出為 PDF
-      </button>
-      <button class="btn-restart" onclick="restart()">
-        ↺ 重新開始
-      </button>
     </div>`;
+
+  type(q.t,document.getElementById('qt'),()=>{
+    if(q.hint)document.getElementById('qhint').style.display='block';
+    renderInput();
+    setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),80);
+  });
 }
 
-function exportPDF() {
-  window.print();
+function renderInput(){
+  if(!S.typed)return;
+  const q=QS[S.step],iz=document.getElementById('iz');
+  if(!iz)return;
+  iz.style.display='block';
+
+  if(q.isC){
+    iz.innerHTML=`
+      <div class="choices">
+        ${q.cs.map(c=>`
+          <div class="choice-item${S.sel===c.k?' sel':''}" onclick="pick('${c.k}')">
+            <div class="choice-key">${c.k}</div>
+            <div class="choice-txt">${x(c.d)}</div>
+            <div class="choice-check"></div>
+          </div>`).join('')}
+      </div>
+      <div class="submit-row">
+        <button class="btn-next" id="sb" onclick="go()" ${!S.sel?'disabled':''}>
+          <span>${q.last?'完成':'繼續'}</span></button>
+      </div>`;
+  }else{
+    iz.innerHTML=`
+      <div class="field" id="fld">
+        <textarea id="ta" placeholder="在這裡輸入你的回答…"
+          rows="4"
+          onkeydown="onK(event)"
+          oninput="onI()"
+          onfocus="document.getElementById('fld').classList.add('focused')"
+          onblur="document.getElementById('fld').classList.remove('focused')"></textarea>
+        <div class="char-count" id="cc"></div>
+      </div>
+      <div class="submit-row">
+        <button class="btn-next" id="sb" onclick="go()">
+          <span>${q.last?'完成':'繼續'}</span></button>
+        <span class="kb-hint">⌘ ↵ 送出</span>
+      </div>`;
+    setTimeout(()=>{const t=document.getElementById('ta');if(t)t.focus();},60);
+  }
 }
 
-function restart() {
-  state = { step: 0, answers: [], typingDone: false, showAff: false, affText: "", selectedChoice: null, done: false };
-  document.getElementById("progressWrap").style.display = "block";
-  render();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+/* ═══ INTERACTIONS ════════════════════════════════ */
+function pick(k){S.sel=k;renderInput();}
+function onK(e){if((e.metaKey||e.ctrlKey)&&e.key==='Enter'){e.preventDefault();go();}}
+function onI(){
+  const t=document.getElementById('ta'),c=document.getElementById('cc');
+  if(!t||!c)return;
+  const n=t.value.length;
+  c.textContent=n?n+' 字':'';
+  c.className='char-count'+(n?' has':'');
 }
 
-/* ═══════════════════════════════════════════════════
-   UTILS
-═══════════════════════════════════════════════════ */
-function escHtml(str) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/\n/g, "<br>");
+function go(){
+  if(S.busy)return;
+  const q=QS[S.step];let val='';
+  if(q.isC){if(!S.sel)return;const c=q.cs.find(x=>x.k===S.sel);val=c.k+'）'+c.d;}
+  else{const t=document.getElementById('ta');val=t?t.value.trim():'';if(!val)return;}
+
+  S.busy=true;
+  const af=q.af[Math.floor(Math.random()*q.af.length)];
+  const al=document.getElementById('afl'),at=document.getElementById('aft');
+  if(al&&at){at.textContent=af;al.style.display='flex';}
+  const sb=document.getElementById('sb');if(sb)sb.disabled=true;
+  S.ans.push(val);
+
+  setTimeout(()=>{
+    S.busy=false;S.typed=false;S.sel=null;
+    S.step+1>=QS.length?S.done=true:S.step++;
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  },1700);
 }
 
-function scrollBottom() {
-  setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }), 80);
+/* ═══ SUMMARY ══════════════════════════════════════ */
+function buildSum(){
+  const a=S.ans;
+  const rows=[
+    {l:'核心主題',v:a[0]||'—'},
+    {l:'承諾的結果',v:a[8]||'—'},
+    {l:'產品形式',v:a[7]||'—'},
+    {l:'第一批潛在客戶',v:a[9]||'—'},
+    {l:'定價建議',v:'低價測試版 NT$1,500–3,000 ／ 一對一諮詢 NT$5,000–12,000'},
+  ];
+  return`<div class="summary">
+    <div class="sum-top">
+      <div class="sum-eyebrow">✦ 你的第一個產品草稿</div>
+      <div class="sum-title">準備好了。<br><em>現在開始賣。</em></div>
+    </div>
+    <div class="sum-items">
+      ${rows.map(r=>`<div class="sum-row">
+        <div class="sum-lbl">${r.l}</div>
+        <div class="sum-val">${x(r.v)}</div>
+      </div>`).join('')}
+    </div>
+    <div class="cta-block">
+      <div class="cta-step">▶ 你的第一步（現在就做）</div>
+      <div class="cta-body">傳訊息給你剛才提到的那個人，問他：</div>
+      <div class="cta-quote">「我最近在整理一個方法，你有沒有在面對這個問題？我想聊聊看能不能幫到你。」</div>
+    </div>
+    <div class="sum-actions">
+      <button class="btn-pdf" onclick="window.print()">匯出為 PDF</button>
+      <button class="btn-restart" onclick="restart()">↺ 重新開始</button>
+    </div>
+  </div>`;
 }
 
-/* ═══════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════ */
+function restart(){
+  S={step:0,ans:[],typed:false,busy:false,sel:null,done:false};
+  document.getElementById('prog').style.display='';
+  document.getElementById('hero').style.display='';
+  render();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══ UTILS ════════════════════════════════════════ */
+function x(s){
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
 render();
 </script>
 </body>
